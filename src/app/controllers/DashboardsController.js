@@ -12,7 +12,8 @@ class DashboardsController {
 
       // Filtrar apenas vendas aprovadas
       const successfulSales = orders.filter(order => order.payment.status === "succeeded");
-      
+      const sales_count = successfulSales.length;
+
     } catch (error) {
       return res.status(500).json({
         error: true,
