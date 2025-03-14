@@ -8,6 +8,7 @@ class DashboardsController {
 
       // Contar total de pedidos e somar valores
       const orders_count = orders.length;
+      const orders_total = orders.reduce((sum, order) => sum + (order.payment.amount || 0), 0);
 
     } catch (error) {
       return res.status(500).json({
