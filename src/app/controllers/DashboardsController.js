@@ -3,8 +3,23 @@ import Order from "../models/Order";
 class DashboardsController {
   async index(req, res) {
     try {
+      // Capturar os filtros de período (start_date e end_date)
+      const { start_date, end_date } = req.query;
+
+      // Converter as datas para objetos Date válidos (se existirem)
+      const startDate = start_date ? new Date(start_date) : null;
+      const endDate = end_date ? new Date(end_date) : null;
+
       // Buscar todos os pedidos no banco
-      const orders = await Order.find();
+      let orders = await Order.find();
+
+      // Aplicar o filtro por período (se as datas forem válidas)
+      if (startDate && endDate) {
+        orders = orders.filter(order => {
+          const orderDate = new Date(order.createdAt);
+          return orderDate >= startDate && orderDate <= endDate;
+        });
+      }
 
       // Contar total de pedidos e somar valores
       const orders_count = orders.length;
@@ -18,7 +33,7 @@ class DashboardsController {
       // Calcular o Ticket Médio (evitar divisão por zero)
       const average_ticket = sales_count > 0 ? sales_total / sales_count : 0;
 
-      // Paginação (por padrão, limitamos a 100 pedidos por página)
+      // Ajustar paginação (exibindo 5 pedidos por página)
       const limit = 5;
       const page = Number(req.query.page) || 1;
       const total = orders_count;
@@ -28,7 +43,7 @@ class DashboardsController {
       // Paginar os pedidos
       const startIndex = (page - 1) * limit;
       const paginatedOrders = orders.slice(startIndex, startIndex + limit);
-      
+
       // Retornar apenas os dados necessários para o frontend
       const formattedOrders = paginatedOrders.map(order => ({
         id_pedido: order._id,
@@ -56,6 +71,7 @@ class DashboardsController {
         page,
         total
       });
+
     } catch (error) {
       return res.status(500).json({
         error: true,
