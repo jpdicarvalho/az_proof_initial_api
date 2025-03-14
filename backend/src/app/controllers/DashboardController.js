@@ -1,7 +1,7 @@
 import Order from "../models/Order";
 import Utils from "../../utils/utils";
 
-class DashboardsController {
+class DashboardController {
   async index(req, res) {
     try {
       // Validar a query `page`
@@ -80,4 +80,4 @@ class DashboardsController {
   }
 }
 
-export default new DashboardsController();
+export default new DashboardController();

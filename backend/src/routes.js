@@ -1,7 +1,7 @@
 //Importo somente a funcão router
 import { Router } from 'express';
 
-import DashboardsController from './app/controllers/DashboardsController';
+import DashboardController from './app/controllers/DashboardController';
 import SessionsController from './app/controllers/SessionsController';
 
 import authMiddleware from './app/middlewares/auth';
@@ -19,7 +19,7 @@ routes.use(authMiddleware);
 
 //################## AUTH PROOF #####################
 //Dashboard
-routes.get("/proof/dashboard", DashboardsController.index);
+routes.get("/proof/dashboard", DashboardController.index);
 //################## AUTH PROOF #####################
 
 export default routes;
