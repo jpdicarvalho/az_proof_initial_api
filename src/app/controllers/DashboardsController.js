@@ -24,6 +24,9 @@ class DashboardsController {
       const total = orders_count;
       const total_pages = Math.ceil(total / limit);
       const has_more = page < total_pages;
+
+      // Paginar os pedidos
+      const startIndex = (page - 1) * limit;
       
     } catch (error) {
       return res.status(500).json({
