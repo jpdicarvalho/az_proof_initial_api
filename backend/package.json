@@ -8,7 +8,8 @@
     "dev": "nodemon",
     "dev:debug": "nodemon --inspect",
     "build": "sucrase ./src -d ./dist --transforms imports",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "jest --runInBand"
   },
   "dependencies": {
     "@pozible/meteor-sha": "^1.0.1",
