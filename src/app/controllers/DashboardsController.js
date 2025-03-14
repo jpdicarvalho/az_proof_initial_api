@@ -1,18 +1,14 @@
 import Order from "../models/Order";
-import { validatePageQuery } from "../utils/pagination";
+import Utils from "../../utils/utils";
 
 class DashboardsController {
   async index(req, res) {
     try {
-      // Capturar e validar a página da query usando a função utilitária
-      const page = validatePageQuery(req.query.page);
+      // Validar a query `page`
+      const page = Utils.validatePageQuery(req.query.page);
 
-      // Capturar os filtros de período (start_date e end_date)
-      const { start_date, end_date } = req.query;
-
-      // Converter as datas para objetos Date válidos (se existirem)
-      const startDate = start_date ? new Date(start_date) : null;
-      const endDate = end_date ? new Date(end_date) : null;
+      // Validar a query `start_date` e `end_date`
+      const { startDate, endDate } = Utils.validateDateRange(req.query.start_date, req.query.end_date);
 
       // Buscar todos os pedidos no banco
       let orders = await Order.find();
