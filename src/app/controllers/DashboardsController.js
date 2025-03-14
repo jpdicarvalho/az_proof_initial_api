@@ -29,6 +29,20 @@ class DashboardsController {
       const startIndex = (page - 1) * limit;
       const paginatedOrders = orders.slice(startIndex, startIndex + limit);
       
+      // Retornar os valores calculados no formato correto
+      return res.status(200).json({
+        orders_total,
+        orders_count,
+        sales_total,
+        sales_count,
+        average_ticket,
+        orders: paginatedOrders,
+        has_more,
+        limit,
+        total_pages,
+        page,
+        total
+      });
     } catch (error) {
       return res.status(500).json({
         error: true,
