@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-
 import databaseConfig from '../config/database';
 
 class Database {
@@ -7,11 +6,16 @@ class Database {
     this.init();
   }
 
-  init() {
-    this.connection = mongoose.connect(
-      databaseConfig.url,
-      databaseConfig.config
-    );
+  async init() {
+    try {
+      this.connection = await mongoose.connect(databaseConfig.url, {
+        writeConcern: { w: 'majority' }
+      });
+      console.log('Conectado ao MongoDB com sucesso!');
+    } catch (error) {
+      console.error('Erro ao conectar ao MongoDB:', error);
+      process.exit(1); // Encerra o processo se a conexão falhar
+    }
   }
 }
 
