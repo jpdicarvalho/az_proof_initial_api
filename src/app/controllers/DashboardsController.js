@@ -27,6 +27,7 @@ class DashboardsController {
 
       // Paginar os pedidos
       const startIndex = (page - 1) * limit;
+      const paginatedOrders = orders.slice(startIndex, startIndex + limit);
       
     } catch (error) {
       return res.status(500).json({
