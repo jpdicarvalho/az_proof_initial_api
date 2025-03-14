@@ -15,6 +15,8 @@ class DashboardsController {
       const sales_count = successfulSales.length;
       const sales_total = successfulSales.reduce((sum, sale) => sum + (sale.payment.amount || 0), 0);
 
+      // Calcular o Ticket Médio (evitar divisão por zero)
+      const average_ticket = sales_count > 0 ? sales_total / sales_count : 0;
 
     } catch (error) {
       return res.status(500).json({
