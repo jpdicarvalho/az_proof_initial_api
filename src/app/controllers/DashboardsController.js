@@ -49,7 +49,7 @@ class DashboardsController {
         sales_total,
         sales_count,
         average_ticket,
-        orders: paginatedOrders,
+        orders: formattedOrders,
         has_more,
         limit,
         total_pages,
