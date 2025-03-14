@@ -19,7 +19,7 @@ class DashboardsController {
       const average_ticket = sales_count > 0 ? sales_total / sales_count : 0;
 
       // Paginação (por padrão, limitamos a 100 pedidos por página)
-      const limit = 100;
+      const limit = 5;
       const page = Number(req.query.page) || 1;
       const total = orders_count;
       const total_pages = Math.ceil(total / limit);
