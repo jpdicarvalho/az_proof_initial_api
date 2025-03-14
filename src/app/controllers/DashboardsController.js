@@ -1,8 +1,12 @@
 import Order from "../models/Order";
+import { validatePageQuery } from "../utils/pagination";
 
 class DashboardsController {
   async index(req, res) {
     try {
+      // Capturar e validar a página da query usando a função utilitária
+      const page = validatePageQuery(req.query.page);
+
       // Capturar os filtros de período (start_date e end_date)
       const { start_date, end_date } = req.query;
 
@@ -35,7 +39,6 @@ class DashboardsController {
 
       // Ajustar paginação (exibindo 5 pedidos por página)
       const limit = 5;
-      const page = Number(req.query.page) || 1;
       const total = orders_count;
       const total_pages = Math.ceil(total / limit);
       const has_more = page < total_pages;
