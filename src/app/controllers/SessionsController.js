@@ -26,7 +26,7 @@ class SessionsController {
       const newPassword = SHA256(password);
 
       //Valida se a senha está correta
-      if (!(await bcrypt.compare(newPassword, user.services.password.bcrypt))) {
+      if (!(await bcrypt.compare(newPassword, user.services.password))) {
         return res.status(401).json({
           error: true,
           message: 'A senha digitada está incorreta. Tente novamente ou recupere a sua senha.'
