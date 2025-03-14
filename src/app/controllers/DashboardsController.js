@@ -29,6 +29,19 @@ class DashboardsController {
       const startIndex = (page - 1) * limit;
       const paginatedOrders = orders.slice(startIndex, startIndex + limit);
       
+      // Retornar apenas os dados necessários para o frontend
+      const formattedOrders = paginatedOrders.map(order => ({
+        id_pedido: order._id,
+        id_loja: order.seller.id,
+        data_criacao: order.createdAt,
+        nome_cliente: order.customer.name,
+        cpf_cliente: order.customer.doc,
+        status_pedido: order.status,
+        status_pagamento: order.payment.status,
+        metodo_pagamento: order.payment.method,
+        total: order.payment.amount
+      }));
+
       // Retornar os valores calculados no formato correto
       return res.status(200).json({
         orders_total,
