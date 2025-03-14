@@ -10,6 +10,9 @@ class DashboardsController {
       const orders_count = orders.length;
       const orders_total = orders.reduce((sum, order) => sum + (order.payment.amount || 0), 0);
 
+      // Filtrar apenas vendas aprovadas
+      const successfulSales = orders.filter(order => order.payment.status === "succeeded");
+      
     } catch (error) {
       return res.status(500).json({
         error: true,
