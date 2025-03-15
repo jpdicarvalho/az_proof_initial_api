@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './Login.css'
 
+import ImgLogin from '../assets/img_login.png'
+
 function Login (){
     const [isEyesOpen, setIsEyesOpen] = useState(false);
     return(
@@ -60,7 +62,7 @@ function Login (){
           </div>
 
           <div className='section__image'>
-            logo
+            <img src={ImgLogin} className="image__login" alt="Imagem ilustrativa para página de login" />
           </div>
           
         </div>
