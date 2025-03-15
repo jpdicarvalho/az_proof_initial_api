@@ -1,0 +1,31 @@
+table {
+    margin-top: 40px;
+    margin-right: 80px;
+    border-collapse: collapse;
+    color: #59666F;
+    width: 100%;
+}
+.thead{
+    border-top-left-radius: 8px;
+}
+.text__th{
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+  
+td {
+    background-color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+}
+  
+tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+  

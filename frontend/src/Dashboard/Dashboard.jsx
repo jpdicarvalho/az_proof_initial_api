@@ -1,4 +1,5 @@
 import ImgLogin from '../assets/img_login.png'
+import OrdersTable from '../Components/OrdersTable';
 
 import './Dashboard.css'
 
@@ -98,6 +99,10 @@ function Dashboard () {
                         <p className='text__totais'>Ticket médio</p>
                         <p className='values__totais'>R$ 230,74</p>
                     </div>
+                </div>
+
+                <div className='container__table'>
+                    <OrdersTable/>
                 </div>
             </div>
         </div>

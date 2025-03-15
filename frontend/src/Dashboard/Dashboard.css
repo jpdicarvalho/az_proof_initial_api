@@ -138,3 +138,8 @@
     font-size: 19px;
     color: #59666F;
 }
+.container__table{
+    width: 100%;
+    padding-right: 96px;
+    padding-left: 290px;
+}
