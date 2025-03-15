@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import './Login.css'
@@ -9,8 +10,13 @@ function Login (){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isEyesOpen, setIsEyesOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState({ email: "", password: "", btnClicked: "", erroRequest: "" });
+    const [messageSucess, setMessageSucess] = useState("");
 
+    const navigate = useNavigate(
+
+    )
     // Expressões Regulares
     const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -19,6 +25,7 @@ function Login (){
         const value = e.target.value;
         setEmail(value);
 
+        setIsLoading(false)
         setErrors((prevErrors) => ({
             ...prevErrors,
             email: emailRegex.test(value) ? "" : "E-mail inválido",
@@ -33,6 +40,7 @@ function Login (){
 
         setPassword(value);
 
+        setIsLoading(false)
         setErrors((prevErrors) => ({
             ...prevErrors,
             password: value.length === 6 ? "" : "A senha deve ter exatamente 6 números",
@@ -41,7 +49,10 @@ function Login (){
 
     // Envio do login
     const handleLogin = async () => {
+        setIsLoading(true)
+        setErrors("");
         if (errors.email || errors.password || !email || !password) {
+            setIsLoading(false)
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 btnClicked: "Por favor, corrija os erros e tente novamente.",
@@ -55,9 +66,17 @@ function Login (){
                 password,
             });
 
-            console.log("Login bem-sucedido:", response.data);
-            alert("Login realizado com sucesso!");
+            // Armazene o token no localStorage
+            localStorage.clear();
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('userName', response.data.profile.name);
+
+            setIsLoading(false)
+            setMessageSucess(`Seja bem-vindo ${response.data.profile.name}`)
+
+            navigate('/Home')
         } catch (error) {
+            setIsLoading(false)
             console.error("Erro no login:", error.response.data);
             console.log(error)
             setErrors((prevErrors) => ({
@@ -84,7 +103,8 @@ function Login (){
                         <path d="M35.6261 8H33.5766L35.6867 10.2355C30.8425 14.4557 24.8077 17.068 18.4153 17.7117C12.0229 18.3554 5.58839 16.9988 0 13.8292C2.29018 17.7981 5.42839 21.2124 9.19057 23.8283C12.9527 26.4442 17.2461 28.1973 21.764 28.9622C26.282 29.7272 30.9131 29.4852 35.3267 28.2536C39.7403 27.022 43.8276 24.8311 47.2966 21.8373L49.4594 23.8787V8H35.6261Z" fill="#FE7C6E"/>
                     </svg>
                 </div>
-
+                
+                <p className={messageSucess ? "success":""}>{messageSucess}</p>
                 <p className={errors.email ? "error":""}>{errors.email}</p>
                 <p className={errors.password ? "error":""}>{errors.password}</p>
                 <p className={errors.btnClicked ? "error":""}>{errors.btnClicked}</p>
@@ -136,9 +156,17 @@ function Login (){
                 <div className="flex-row">
                     <span className="span">Esqueci a senha</span>
                 </div>
-                <button className="button-submit" onClick={handleLogin}>
-                    Entrar
-                </button>
+                <div className='box__btn__login'>
+                    {isLoading ? (
+                        <svg className="svg__loading" viewBox="25 25 50 50">
+                            <circle className='cicle__loading' r="20" cy="50" cx="50"></circle>
+                        </svg>
+                    ):(
+                        <button className="button-submit" onClick={handleLogin}>
+                            Entrar
+                        </button>
+                    )}
+                </div>
 
             </div>
           </div>
