@@ -1,14 +1,70 @@
 import { useState } from 'react'
+import axios from 'axios'
+
 import './Login.css'
 
 import ImgLogin from '../assets/img_login.png'
 
 function Login (){
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [isEyesOpen, setIsEyesOpen] = useState(false);
+    const [errors, setErrors] = useState({ email: "", password: "" });
+
+    // Expressões Regulares
+    const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // Validação dinâmica do e-mail
+    const handleEmailChange = (e) => {
+        const value = e.target.value;
+        setEmail(value);
+
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            email: emailRegex.test(value) ? "" : "E-mail inválido",
+        }));
+    };
+
+    // Validação dinâmica da senha (somente números, 6 caracteres)
+    const handlePasswordChange = (e) => {
+        const value = e.target.value;
+
+        if (!/^\d*$/.test(value) || value.length > 6) return; // Permite apenas números e até 6 caracteres
+
+        setPassword(value);
+
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            password: value.length === 6 ? "" : "A senha deve ter exatamente 6 números",
+        }));
+    };
+
+    // Envio do login
+    const handleLogin = async () => {
+        if (errors.email || errors.password || !email || !password) {
+            alert("Por favor, corrija os erros antes de continuar.");
+            return;
+        }
+
+        try {
+            const response = await axios.post("http://localhost:3333/proof/session", {
+                email,
+                password,
+            });
+
+            console.log("Login bem-sucedido:", response.data);
+            alert("Login realizado com sucesso!");
+        } catch (error) {
+            console.error("Erro no login:", error.response?.data || error.message);
+            alert("Erro ao fazer login. Verifique seus dados.");
+        }
+    };
+
     return(
         <div className='content__main__login'>
           <div className='section__form'>
             <form className="form">
+
                 <div className='box__logo__form'>
                     <svg width="160" height="68" viewBox="0 0 160 68" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M58.2605 55.1026L59.7724 52.6125C61.551 54.1688 64.6637 55.1916 67.8573 55.1916C72.3484 55.1916 74.7941 53.6352 74.7941 51.0117C74.7941 45.7201 61.543 49.3664 61.543 41.4513C61.543 37.0046 65.545 34.1749 71.6814 34.1749C74.6607 34.1749 77.8178 35.0197 79.5965 36.3537L78.2625 38.8884C76.4394 37.5099 73.8158 36.8671 71.4146 36.8671C67.1013 36.8671 64.6556 38.6013 64.6556 41.136C64.6556 46.5609 77.9068 42.8702 77.9068 50.6519C77.9068 55.2764 73.7714 57.9283 67.546 57.9283C63.7299 57.9485 60.0836 56.7479 58.2605 55.1026Z" fill="#59666F"/>
@@ -21,20 +77,37 @@ function Login (){
                         <path d="M35.6261 8H33.5766L35.6867 10.2355C30.8425 14.4557 24.8077 17.068 18.4153 17.7117C12.0229 18.3554 5.58839 16.9988 0 13.8292C2.29018 17.7981 5.42839 21.2124 9.19057 23.8283C12.9527 26.4442 17.2461 28.1973 21.764 28.9622C26.282 29.7272 30.9131 29.4852 35.3267 28.2536C39.7403 27.022 43.8276 24.8311 47.2966 21.8373L49.4594 23.8787V8H35.6261Z" fill="#FE7C6E"/>
                     </svg>
                 </div>
-                
+
+                <p className={errors.email ? "error":""}>{errors.email}</p>
+                <p className={errors.password ? "error":""}>{errors.password}</p>
 
                 <div className="flex-column">
                   <label>E-mail </label>
                 </div>
+                
                 <div className="inputForm">
-                    <input type="text" className="input" placeholder="seuemail@exemplo.com"/>
+                    <input
+                        type="email"
+                        className="input"
+                        value={email}
+                        onChange={handleEmailChange}
+                        placeholder="seuemail@exemplo.com"
+                    />
                 </div>
 
                 <div className="flex-column">
                     <label>Senha </label>
                 </div>
+
                 <div className="inputForm">
-                    <input type="password" className="input" placeholder="Sua senha"/>
+                    <input
+                        type={isEyesOpen ? "text" : "password"}
+                        className="input"
+                        value={password}
+                        onChange={handlePasswordChange}
+                        placeholder="Sua senha"
+                    />
+
                     <div className='box__svg__eyes' onClick={() =>{setIsEyesOpen(!isEyesOpen)}}>
                         {isEyesOpen ? (
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -43,20 +116,20 @@ function Login (){
                             </svg>
                         ):(
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M20.5303 4.53033C20.8232 4.23744 20.8232 3.76256 20.5303 3.46967C20.2374 3.17678 19.7626 3.17678 19.4697 3.46967L3.46967 19.4697C3.17678 19.7626 3.17678 20.2374 3.46967 20.5303C3.76256 20.8232 4.23744 20.8232 4.53033 20.5303L7.37723 17.6834C8.74353 18.3266 10.3172 18.75 12 18.75C14.684 18.75 17.0903 17.6729 18.8206 16.345C19.6874 15.6797 20.4032 14.9376 20.9089 14.2089C21.4006 13.5003 21.75 12.7227 21.75 12C21.75 11.2773 21.4006 10.4997 20.9089 9.79115C20.4032 9.06244 19.6874 8.32028 18.8206 7.65503C18.5585 7.45385 18.2808 7.25842 17.989 7.07163L20.5303 4.53033ZM16.8995 8.16113L15.1287 9.93196C15.5213 10.5248 15.75 11.2357 15.75 12C15.75 14.0711 14.0711 15.75 12 15.75C11.2357 15.75 10.5248 15.5213 9.93196 15.1287L8.51524 16.5454C9.58077 16.9795 10.7621 17.25 12 17.25C14.2865 17.25 16.3802 16.3271 17.9073 15.155C18.6692 14.5703 19.2714 13.9374 19.6766 13.3536C20.0957 12.7497 20.25 12.2773 20.25 12C20.25 11.7227 20.0957 11.2503 19.6766 10.6464C19.2714 10.0626 18.6692 9.42972 17.9073 8.84497C17.5941 8.60461 17.2571 8.37472 16.8995 8.16113ZM11.0299 14.0307C11.3237 14.1713 11.6526 14.25 12 14.25C13.2426 14.25 14.25 13.2426 14.25 12C14.25 11.6526 14.1713 11.3237 14.0307 11.0299L11.0299 14.0307Z" fill="#59666F"/>
+                                <path fillRule="evenodd" clipRule="evenodd" d="M20.5303 4.53033C20.8232 4.23744 20.8232 3.76256 20.5303 3.46967C20.2374 3.17678 19.7626 3.17678 19.4697 3.46967L3.46967 19.4697C3.17678 19.7626 3.17678 20.2374 3.46967 20.5303C3.76256 20.8232 4.23744 20.8232 4.53033 20.5303L7.37723 17.6834C8.74353 18.3266 10.3172 18.75 12 18.75C14.684 18.75 17.0903 17.6729 18.8206 16.345C19.6874 15.6797 20.4032 14.9376 20.9089 14.2089C21.4006 13.5003 21.75 12.7227 21.75 12C21.75 11.2773 21.4006 10.4997 20.9089 9.79115C20.4032 9.06244 19.6874 8.32028 18.8206 7.65503C18.5585 7.45385 18.2808 7.25842 17.989 7.07163L20.5303 4.53033ZM16.8995 8.16113L15.1287 9.93196C15.5213 10.5248 15.75 11.2357 15.75 12C15.75 14.0711 14.0711 15.75 12 15.75C11.2357 15.75 10.5248 15.5213 9.93196 15.1287L8.51524 16.5454C9.58077 16.9795 10.7621 17.25 12 17.25C14.2865 17.25 16.3802 16.3271 17.9073 15.155C18.6692 14.5703 19.2714 13.9374 19.6766 13.3536C20.0957 12.7497 20.25 12.2773 20.25 12C20.25 11.7227 20.0957 11.2503 19.6766 10.6464C19.2714 10.0626 18.6692 9.42972 17.9073 8.84497C17.5941 8.60461 17.2571 8.37472 16.8995 8.16113ZM11.0299 14.0307C11.3237 14.1713 11.6526 14.25 12 14.25C13.2426 14.25 14.25 13.2426 14.25 12C14.25 11.6526 14.1713 11.3237 14.0307 11.0299L11.0299 14.0307Z" fill="#59666F"/>
                                 <path d="M12 5.25C13.0323 5.25 14.0236 5.40934 14.9511 5.68101C15.1296 5.73328 15.1827 5.95662 15.0513 6.0881L14.2267 6.91265C14.1648 6.97451 14.0752 6.99928 13.99 6.97967C13.3506 6.83257 12.6839 6.75 12 6.75C9.71345 6.75 7.61978 7.67292 6.09267 8.84497C5.33078 9.42972 4.72857 10.0626 4.32343 10.6464C3.90431 11.2503 3.75 11.7227 3.75 12C3.75 12.2773 3.90431 12.7497 4.32343 13.3536C4.67725 13.8635 5.18138 14.4107 5.81091 14.9307C5.92677 15.0264 5.93781 15.2015 5.83156 15.3078L5.12265 16.0167C5.03234 16.107 4.88823 16.1149 4.79037 16.0329C4.09739 15.4517 3.51902 14.8255 3.0911 14.2089C2.59937 13.5003 2.25 12.7227 2.25 12C2.25 11.2773 2.59937 10.4997 3.0911 9.79115C3.59681 9.06244 4.31262 8.32028 5.17941 7.65503C6.90965 6.32708 9.31598 5.25 12 5.25Z" fill="#59666F"/>
                                 <path d="M12 8.25C12.1185 8.25 12.2357 8.25549 12.3513 8.26624C12.5482 8.28453 12.6194 8.51991 12.4796 8.6597L11.2674 9.87196C10.6141 10.0968 10.0968 10.6141 9.87196 11.2674L8.6597 12.4796C8.51991 12.6194 8.28453 12.5482 8.26624 12.3513C8.25549 12.2357 8.25 12.1185 8.25 12C8.25 9.92893 9.92893 8.25 12 8.25Z" fill="#59666F"/>
                             </svg>
                         )}
-                        
-                        
                     </div>
                 </div>
                 
                 <div className="flex-row">
                     <span className="span">Esqueci a senha</span>
                 </div>
-                <button className="button-submit">Entrar</button>
+                <button className="button-submit" onClick={handleLogin}>
+                    Entrar
+                </button>
 
             </form>
           </div>
