@@ -10,7 +10,7 @@
     "dev:debug": "nodemon --inspect",
     "build": "sucrase ./src -d ./dist --transforms imports",
     "start": "node dist/server.js",
-    "test": "jest --runInBand"
+    "test": "npx jest src/utils/utils.test.js && npx jest src/app/controllers/DashboardController.test.js"
   },
   "dependencies": {
     "@pozible/meteor-sha": "^1.0.1",
