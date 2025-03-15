@@ -74,7 +74,7 @@ function Login (){
             setIsLoading(false)
             setMessageSucess(`Seja bem-vindo ${response.data.profile.name}`)
 
-            navigate('/Home')
+            navigate('/Dashboard')
         } catch (error) {
             setIsLoading(false)
             console.error("Erro no login:", error.response.data);
