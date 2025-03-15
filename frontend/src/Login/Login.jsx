@@ -9,7 +9,7 @@ function Login (){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isEyesOpen, setIsEyesOpen] = useState(false);
-    const [errors, setErrors] = useState({ email: "", password: "" });
+    const [errors, setErrors] = useState({ email: "", password: "", btnClicked: "", erroRequest: "" });
 
     // Expressões Regulares
     const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -42,8 +42,11 @@ function Login (){
     // Envio do login
     const handleLogin = async () => {
         if (errors.email || errors.password || !email || !password) {
-            alert("Por favor, corrija os erros antes de continuar.");
-            return;
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                btnClicked: "Por favor, corrija os erros e tente novamente.",
+            }));
+            return
         }
 
         try {
@@ -55,15 +58,19 @@ function Login (){
             console.log("Login bem-sucedido:", response.data);
             alert("Login realizado com sucesso!");
         } catch (error) {
-            console.error("Erro no login:", error.response?.data || error.message);
-            alert("Erro ao fazer login. Verifique seus dados.");
+            console.error("Erro no login:", error.response.data);
+            console.log(error)
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                erroRequest: "Usuário não encontrado. E-mail ou senha incorretos.",
+            }));
         }
     };
 
     return(
         <div className='content__main__login'>
           <div className='section__form'>
-            <form className="form">
+            <div className="form">
 
                 <div className='box__logo__form'>
                     <svg width="160" height="68" viewBox="0 0 160 68" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,6 +87,8 @@ function Login (){
 
                 <p className={errors.email ? "error":""}>{errors.email}</p>
                 <p className={errors.password ? "error":""}>{errors.password}</p>
+                <p className={errors.btnClicked ? "error":""}>{errors.btnClicked}</p>
+                <p className={errors.erroRequest ? "error":""}>{errors.erroRequest}</p>
 
                 <div className="flex-column">
                   <label>E-mail </label>
@@ -131,7 +140,7 @@ function Login (){
                     Entrar
                 </button>
 
-            </form>
+            </div>
           </div>
 
           <div className='section__image'>

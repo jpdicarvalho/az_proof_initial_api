@@ -19,7 +19,7 @@ class SessionsController {
       if (!user) {
         return res.status(401).json({
           error: true,
-          message: 'Usuário não encontrado. Verifique se o e-mail digitado está correto e tente novamente.'
+          message: 'Usuário não encontrado. Verifique se o e-mail ou a senha digitados estão corretos e tente novamente.'
         });
       }
 

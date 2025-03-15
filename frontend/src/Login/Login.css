@@ -97,8 +97,6 @@
 }
 .error__hiden{
     opacity: 0;
-    transition: 0.5s;
-    
 }
 .error{
     opacity: 1;
@@ -110,5 +108,4 @@
     color: red;
     width: 100%;
     font-size: 12px;
-    transition: 0.5s;
 }
