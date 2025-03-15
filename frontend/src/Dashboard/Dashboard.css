@@ -90,7 +90,51 @@
     background: #FE7C6E;
     margin-right: 41px;
 }
+
 .section__content{
     width: 100%;
     background: #f6f6f6;
+}
+.box__text__order{
+    padding-left: 290px;
+    margin-top: 24px;
+}
+.text__order{
+    font-weight: 400;
+    font-size: 19px;
+    color: #59666F;
+}
+.container__totais{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 49px;
+    padding-left: 290px;
+    padding-right: 84px;
+}
+.box__totais{
+    width: 359px;
+    height: 174px;
+    margin-right: 16px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 2px 4px 0px #0000000D;
+    padding-left: 24px;
+    padding-top: 24px;
+}
+.box__svg{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: red;
+}
+.text__totais{
+    margin-top: 24px;
+    font-weight: 400;
+    font-size: 19px;
+    color: #59666F;
+}
+.values__totais{
+    font-weight: 700;
+    font-size: 19px;
+    color: #59666F;
 }

@@ -54,9 +54,50 @@ function Dashboard () {
                     </div>
                 </div>
 
-                <div className='inner__content'>
-                    <div></div>
-                    content
+                <div className='box__text__order'>
+                    <p className='text__order'>Resumo dos pedidos</p>
+                </div>
+
+                <div className='container__totais'>
+                    <div className='box__totais'>
+                        <div className='box__svg center' style={{background: '#F4C8E1'}}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18.75 16.5V5.99999C18.7512 5.70417 18.6939 5.41103 18.5813 5.13749C18.4686 4.86394 18.3029 4.61541 18.0938 4.40623C17.8846 4.19705 17.636 4.03137 17.3625 3.91873C17.089 3.8061 16.7958 3.74875 16.5 3.74999H3.75" stroke="#E54594" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9.75 9.75H15.75" stroke="#E54594" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9.75 12.75H15.75" stroke="#E54594" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2.07187 7.5C1.829 7.22807 1.65585 6.9012 1.56733 6.54751C1.4788 6.19382 1.47756 5.82392 1.56369 5.46964C1.64983 5.11536 1.82077 4.78732 2.0618 4.51376C2.30283 4.2402 2.60673 4.02931 2.94734 3.89924C3.28795 3.76918 3.65507 3.72383 4.01709 3.76711C4.37911 3.81039 4.72519 3.941 5.02554 4.14769C5.32589 4.35439 5.57151 4.63097 5.74126 4.95364C5.91101 5.27632 5.9998 5.63541 6 6V18C6.00019 18.3646 6.08899 18.7237 6.25874 19.0464C6.42849 19.369 6.67411 19.6456 6.97446 19.8523C7.27481 20.059 7.62089 20.1896 7.98291 20.2329C8.34493 20.2762 8.71205 20.2308 9.05266 20.1008C9.39327 19.9707 9.69717 19.7598 9.9382 19.4862C10.1792 19.2127 10.3502 18.8846 10.4363 18.5304C10.5224 18.1761 10.5212 17.8062 10.4327 17.4525C10.3441 17.0988 10.171 16.7719 9.92813 16.5H20.4281C20.7177 16.8238 20.9074 17.2245 20.9743 17.6538C21.0411 18.0831 20.9823 18.5225 20.8048 18.9191C20.6274 19.3156 20.3389 19.6523 19.9743 19.8885C19.6096 20.1246 19.1844 20.2502 18.75 20.25H8.25" stroke="#E54594" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <p className='text__totais'>200 Pedidos</p>
+                        <p className='values__totais'>R$ 50.480,95</p>
+                    </div>
+                    <div className='box__totais'>
+                        <div className='box__svg center' style={{background: '#B6EEDD'}}>
+                            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.3 6.75V8.25" stroke="#07C693" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12.3 15.75V17.25" stroke="#07C693" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12.3 21C17.2706 21 21.3 16.9706 21.3 12C21.3 7.02944 17.2706 3 12.3 3C7.32949 3 3.30005 7.02944 3.30005 12C3.30005 16.9706 7.32949 21 12.3 21Z" stroke="#07C693" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.05 15.75H13.425C13.9223 15.75 14.3992 15.5525 14.7509 15.2008C15.1025 14.8492 15.3 14.3723 15.3 13.875C15.3 13.3777 15.1025 12.9008 14.7509 12.5492C14.3992 12.1975 13.9223 12 13.425 12H11.175C10.6778 12 10.2009 11.8025 9.84922 11.4508C9.49759 11.0992 9.30005 10.6223 9.30005 10.125C9.30005 9.62772 9.49759 9.15081 9.84922 8.79917C10.2009 8.44754 10.6778 8.25 11.175 8.25H14.55" stroke="#07C693" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <p className='text__totais'>156 Vendas</p>
+                        <p className='values__totais'>R$ 35.996,42</p>
+                    </div>
+                    <div className='box__totais'>
+                        <div className='box__svg center' style={{background: '#C3E7F3'}}>
+                            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.3501 17.25H10.3501" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7.3501 14.25V20.25" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.3501 6.75H4.3501" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.8501 15.7594H14.8501" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.8501 18.7406H14.8501" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.1001 4.5L15.6001 9" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.1001 9L15.6001 4.5" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <p className='text__totais'>Ticket médio</p>
+                        <p className='values__totais'>R$ 230,74</p>
+                    </div>
                 </div>
             </div>
         </div>
