@@ -1,5 +1,5 @@
-import Order from "../models/Order";
-import Utils from "../../utils/utils";
+import Order from "../models/Order.js";
+import Utils from "../../utils/utils.js";
 
 class DashboardController {
   async index(req, res) {

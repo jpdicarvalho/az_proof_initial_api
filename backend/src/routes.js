@@ -1,10 +1,10 @@
 //Importo somente a funcão router
 import { Router } from 'express';
 
-import DashboardController from './app/controllers/DashboardController';
-import SessionsController from './app/controllers/SessionsController';
+import DashboardController from './app/controllers/DashboardController.js';
+import SessionsController from './app/controllers/SessionsController.js';
 
-import authMiddleware from './app/middlewares/auth';
+import authMiddleware from './app/middlewares/auth.js';
 
 const routes = new Router();
 
