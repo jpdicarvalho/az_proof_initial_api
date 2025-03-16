@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-import OrdersTable from '../Components/OrdersTable';
+import OrdersTable from '../Components/OrdersTable/OrdersTable';
 import Pagination from '../Components/Pagination/Pagination';
 
 import './Dashboard.css';

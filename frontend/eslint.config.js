@@ -9,7 +9,12 @@ export default [
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.mocha, // Adiciona suporte para describe, it, etc.
+        ...globals.cypress, // Adiciona suporte ao Cypress
+      },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
@@ -19,6 +24,7 @@ export default [
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      'cypress': cypress, // Adiciona o plugin do Cypress
     },
     rules: {
       ...js.configs.recommended.rules,
