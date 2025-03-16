@@ -6,6 +6,7 @@ class DashboardController {
     try {
       // Validar a query `page`
       const page = Utils.validatePageQuery(req.query.page);
+      const limit = Utils.validatePageQuery(req.query.limit);
 
       // Validar a query `start_date` e `end_date`
       const { startDate, endDate } = Utils.validateDateRange(req.query.start_date, req.query.end_date);
@@ -34,7 +35,6 @@ class DashboardController {
       const average_ticket = sales_count > 0 ? sales_total / sales_count : 0;
 
       // Ajustar paginação (exibindo 5 pedidos por página)
-      const limit = 5;
       const total = orders_count;
       const total_pages = Math.ceil(total / limit);
       const has_more = page < total_pages;

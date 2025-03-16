@@ -53,7 +53,7 @@
     justify-content: end;
     align-items: center;
     background: #fff;
-    box-shadow: 2px 0px 4px 0px #0000000D;
+    box-shadow: 2px 0px 6px 0px #00000031;
     height: 80px;
     color: black;
 }
@@ -93,7 +93,7 @@
 
 .section__content{
     width: 100%;
-    background: #fffbfb;
+    background: #fff;
 }
 .box__text__order{
     padding-left: 290px;
@@ -101,23 +101,23 @@
 }
 .text__order{
     font-weight: 400;
-    font-size: 19px;
+    font-size: 16px;
     color: #59666F;
 }
 .container__totais{
     display: flex;
     justify-content: space-between;
-    margin-top: 39px;
+    margin-top: 29px;
     padding-left: 290px;
     padding-right: 84px;
 }
 .box__totais{
-    width: 359px;
-    height: 174px;
+    width: 349px;
+    height: 164px;
     margin-right: 16px;
     border-radius: 8px;
     background: #fff;
-    box-shadow: 0px 2px 4px 0px #0000000D;
+    box-shadow: 2px 0px 4px 0px #00000031;
     padding-left: 24px;
     padding-top: 24px;
 }
@@ -142,4 +142,33 @@
     width: 100%;
     padding-right: 96px;
     padding-left: 290px;
+}
+
+.footer{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    bottom: 0;
+    margin-left: 250px;
+    padding-right: 90px;
+    background: #F5F5F5;
+    height: 50px;
+    width: 85%;
+    color: #97A1A8;
+}
+.text__links{
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400;
+    font-size: 12px;
+    margin-left: 41px;
+    width: 260px;
+}
+.box__logo__az{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 190px;
+    font-size: 12px
 }
