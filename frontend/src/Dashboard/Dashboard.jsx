@@ -10,6 +10,8 @@ function Dashboard() {
     const userName = localStorage.getItem("userName");
     const token = localStorage.getItem("token");
 
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(1);
@@ -21,6 +23,38 @@ function Dashboard() {
     const [averageTicket, setAverageTicket] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+
+    // Converte `DD/MM/YYYY` para `YYYY-MM-DD`
+    const convertToISODate = (dateStr) => {
+        if (!dateStr || dateStr.length !== 10) return ""; // Se não for uma data válida, retorna string vazia
+        const [day, month, year] = dateStr.split("/");
+        return `${year}-${month}-${day}`;
+    };
+
+    // Função para formatar a data conforme o usuário digita
+    const formatDateInput = (value) => {
+        // Remove tudo que não for número
+        let newValue = value.replace(/\D/g, "");
+
+        // Insere as barras automaticamente
+        if (newValue.length > 2) {
+            newValue = `${newValue.slice(0, 2)}/${newValue.slice(2)}`;
+        }
+        if (newValue.length > 5) {
+            newValue = `${newValue.slice(0, 5)}/${newValue.slice(5, 9)}`;
+        }
+
+        return newValue;
+    };
+
+    // Manipuladores para os inputs
+    const handleStartDateChange = (e) => {
+        setStartDate(formatDateInput(e.target.value));
+    };
+
+    const handleEndDateChange = (e) => {
+        setEndDate(formatDateInput(e.target.value));
+    };
 
     // Função para formatar números como moeda brasileira (R$)
     const formatCurrencyBRL = (value) => {
@@ -37,7 +71,12 @@ function Dashboard() {
 
         try {
             const response = await axios.get("http://localhost:3333/proof/dashboard", {
-                params: { page: currentPage, limit: pageSize },
+                params: {
+                    page: currentPage,
+                    limit: pageSize,
+                    start_date: convertToISODate(startDate),
+                    end_date: convertToISODate(endDate),
+                },
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -91,6 +130,31 @@ function Dashboard() {
 
             <div className='section__content'>
                 <div className='header__content'>
+                    <div className='box__search__by__date'>
+                        <div className='box__input__search'>
+                            <input
+                                type="text"
+                                className="input__search"
+                                value={startDate}
+                                onChange={handleStartDateChange}
+                                maxLength={10} // Evita que o usuário digite mais de 10 caracteres
+                                placeholder="Data de início"
+                            />
+                            <input
+                                type="text"
+                                className="input__search"
+                                value={endDate}
+                                onChange={handleEndDateChange}
+                                maxLength={10} // Evita que o usuário digite mais de 10 caracteres
+                                placeholder="Data de término"
+                            />
+                        </div>
+                        {startDate && endDate ? (
+                            <button className='btn__search' onClick={fetchOrders}>Pesquisar período</button>
+                        ):(
+                            <button className='btn__search__fake'>Pesquisar período</button>
+                        )} 
+                    </div>
                     <div className='box__warnings center'>
                         <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.7194 5.33333C12.7194 4.27247 12.2851 3.25505 11.512 2.5049C10.7389 1.75476 9.69043 1.33333 8.59715 1.33333C7.50387 1.33333 6.45537 1.75476 5.6823 2.5049C4.90923 3.25505 4.47493 4.27247 4.47493 5.33333C4.47493 10 2.41382 11.3333 2.41382 11.3333H14.7805C14.7805 11.3333 12.7194 10 12.7194 5.33333Z" stroke="#59666F" strokeLinecap="round" strokeLinejoin="round"/>
@@ -113,7 +177,7 @@ function Dashboard() {
                 <div className='box__text__order'>
                     <p className='text__order'>Resumo dos pedidos</p>
                 </div>
-
+                
                 <div className='container__totais'>
                     <div className='box__totais'>
                         <div className='box__svg center' style={{background: '#F4C8E1'}}>

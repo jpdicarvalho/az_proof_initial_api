@@ -105,6 +105,47 @@
     color: #59666F;
 }
 
+.box__search__by__date{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding-left: 24px;
+    width: 60%;
+}
+.box__input__search{
+    margin-right: 10px;
+}
+.input__search{
+    border: 1px solid #E6E6E6;
+    color: #59666F;
+    border-radius: 8px;
+    height: 42px;
+    background: transparent;
+    padding-left: 10px;
+    margin: 5px;
+    outline: none;
+}
+.btn__search{
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid #E6E6E6;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #FE7C6E;
+    outline: none;
+}
+.btn__search__fake{
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid #E6E6E6;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: transparent;
+    color: #97A1A8;
+    outline: none;
+}
+
+
 .container__totais{
     display: flex;
     justify-content: space-between;
