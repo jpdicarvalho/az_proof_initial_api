@@ -11,30 +11,23 @@ Com a etapa anterior concluída, siga os seguintes passos:
 
 Abra um terminal e execute:  
   ```sh
-  git clone https://github.com/jpdicarvalho/Desafio-Clarke-Energia.git
+  git clone https://github.com/jpdicarvalho/az_suite_challenge_solved.git
   ````
 Em seguida, acesse o diretório que contém o projeto  
   ````sh
-  cd Desafio-Clarke-Energia
+  cd az_suite_challenge_solved
   ````
 Agora, dentro da pasta do projeto, execute:
   ````sh
   docker-compose up --build
   ````
 Isso irá basicamente:
-  1. Criar e iniciar o banco de dados MySQL no Docker
-  2. Rodar as migrations do Prisma para criar as tabelas
-  3. Popular o banco de dados com informações de teste
-  4. Iniciar o backend (API GraphQL)
-  5. Iniciar o frontend (React + Vite)
+  1. Iniciar o backend (API RESTfull)
+  2. Iniciar o frontend (React + Vite com JavaScript)
 
 Depois, para acessar a aplicação, use:
   ````sh
    http://localhost:5173
-  ````
-Caso queira acessar apenas a API GraphQL, use:
-  ````sh
-   http://localhost:4000/graphql
   ````
 ## Comandos úteis parar gerenciar os containers:
 Parar os containers:
