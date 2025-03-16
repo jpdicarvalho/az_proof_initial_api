@@ -1,3 +1,22 @@
+# Requisitos Técnicos e Diferencias implementados
+
+### **Backend**
+ - **Tecnologias:** API RESTfull com Node.js, JavaScript, Jest e Supertest.
+ - **Descrição:** Para a complementação do backend, segui a risca o padrão de desenvolvimento já existente, portanto, para atender os requisitos e as regras de negócios do item 2, desenvolvi a solção contida no seguinte arquivo: **backend/src/app/controllers/DashboardController.js**. Ademais, desenvolvi duas funções contidas em **backend/src/utils/utils.js** para a validação dos dados fornecidos pelo usuário. Além disso, para garantir a **qualidade, confiabilidade e integridade da solução proposta**, implementei **testes automatizados** utilizando **Jest e Supertest**. Sendo assim, esses testes validam o correto funcionamento da solução, portanto, o código fonte dos testes pode se encontrado no mesmo diretório de DashboardController.js e utils.js.
+   
+### **Frontend**
+- **Tecnologias Utilizadas:** React + Vite, JavaScript, CSS e Cypress.
+- **Descrição:** Para o desenvolvimento do frontend, foi utilizada a combinação de React e Vite, visando atender aos requisitos do desafio e, também, pela familiaridade com essas tecnologias, que oferecem alta performance e modularidade na construção de aplicações. Além disso, conforme proposto no desafio, essa aplicação prever a utilização via Web (Desktop), seguindo o padrão de desenvolvimento clean code, e seguindo exatamente as definições das regras de negócio assim como estar igual ao modelo Figma disponibilizado. Já para a estilização, optei por usar o **CSS puro**, sem dependências externas. Ademais, para validação da interface e experiência do usuário, foram implementados **testes automatizados end-to-end (E2E) com Cypress** para a página de login, garantindo que a navegação e as interações funcionem corretamente. Portanto, o código fonte dos testes pode ser encontrado em **frontend/cypress/e2e/login.cy.js**.
+
+
+### **Dokerização do projeto**
+- **Tecnologias:** Docker e Docker Compose.
+- **Descrição:** Para tornar a aplicação **portável e fácil de rodar em qualquer ambiente**, utilizei o **Docker** para containerizar os serviços. Isso permite que a aplicação seja executada sem necessidade de instalações manuais ou configurações específicas de cada máquina.
+
+- **Orquestração com Docker Compose:**  
+  Para evitar que cada serviço precise ser iniciado individualmente, implementei um **Docker Compose** que gerencia **backend e frontend** de forma automática. Assim, ao rodar um único comando, todos os containers sobem juntos e já conectados corretamente.
+  
+
 ## Como Rodar o Projeto Localmente?
 
 Antes de começar, verifique se sua máquina possui os seguintes pré-requisitos instalados:  
