@@ -72,10 +72,6 @@ Instale as dependências
   ````sh
   npm install
   ````
-No arquivo .env, troque o banco de dados para:
-  ````sh
-  DATABASE_URL="mysql://root:qafFdOrkKUYwofilfHSkIUcIIHElmFqI@nozomi.proxy.rlwy.net:22845/railway"
-  ````
 Agora, ainda no diretório backend, execulte:
   ````sh
   npm run test
@@ -100,4 +96,4 @@ Agora, em um terminal paralelo, execulte o seguinte comando **dentro do diretór
   ````sh
   npx cypress open
   ````
-Isso deve abrir a tela do cypress com duas opções de testes, portanto, selecione E2E 'Testing'. Em seguida, selecione um navegador de sua preferencia e clique em 'Start E2E Testing in Chrome'. Por último, selecione o arquivo 'searchSupplie.cy.js' e aguarde os testes serem execultados.
+Isso deve abrir a tela do cypress com duas opções de testes, portanto, selecione E2E 'Testing'. Em seguida, selecione um navegador de sua preferencia e clique em 'Start E2E Testing in Chrome'. Por último, selecione o arquivo 'login.cy.js' e aguarde os testes serem execultados.
