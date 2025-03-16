@@ -104,10 +104,11 @@
     font-size: 16px;
     color: #59666F;
 }
+
 .container__totais{
     display: flex;
     justify-content: space-between;
-    margin-top: 29px;
+    margin-top: 20px;
     padding-left: 290px;
     padding-right: 84px;
 }
@@ -137,6 +138,15 @@
     font-weight: 700;
     font-size: 19px;
     color: #59666F;
+}
+.text__search__data{
+    text-align: center;
+    font-size: 16px;
+    color: #59666F;
+    margin-top: 15px;
+    width: 1150px;
+    margin-left: 290px;
+
 }
 .container__table{
     width: 100%;

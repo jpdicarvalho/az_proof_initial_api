@@ -1,66 +1,66 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios'
+import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 
 import OrdersTable from '../Components/OrdersTable';
 import Pagination from '../Components/Pagination/Pagination';
 
-import './Dashboard.css'
+import './Dashboard.css';
 
-function Dashboard () {
-  
+function Dashboard() {
     const userName = localStorage.getItem("userName");
     const token = localStorage.getItem("token");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(1);
-    const [orders, setOrders] = useState([]); // Armazena os pedidos da API
-    const [totalOrders, setTotalOrders] = useState("");
-    const [amountOrders, setAmountOrders] = useState("");
-    const [totalSales, setTotalSales] = useState("");
-    const [amountSales, setAmountSales] = useState("");
-    const [averageTicket, setAverageTicket] = useState("");
+    const [orders, setOrders] = useState([]);
+    const [totalOrders, setTotalOrders] = useState(0);
+    const [amountOrders, setAmountOrders] = useState(0);
+    const [totalSales, setTotalSales] = useState(0);
+    const [amountSales, setAmountSales] = useState(0);
+    const [averageTicket, setAverageTicket] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
-  
-    // Função para buscar pedidos do backend
-    const fetchOrders = async (pageNumber = 1, pageSize = 5) => {
-        try {
-            const response = await axios.get("http://localhost:3333/proof/dashboard", {
-                params: {
-                    page: pageNumber,
-                    limit: pageSize, // Envia limite por página
-                },
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            setOrders(response.data.orders || []);
-            setTotalPages(response.data.total_pages || 1);
-            setCurrentPage(pageNumber);
-            setTotalOrders(response.data.orders_count)
-            setAmountOrders(response.data.orders_total)
-            setTotalSales(response.data.sales_count)
-            setAmountSales(response.data.sales_total)
-            setAverageTicket(response.data.average_ticket)
-
-        } catch (error) {
-            console.error("Erro na requisição:", error.response?.data || error.message);
-        }
-    };
-
-    // Chamar a API ao carregar a página ou mudar a quantidade de itens
-    useEffect(() => {
-        fetchOrders(currentPage, pageSize);
-    }, [currentPage, pageSize]);
-
+    // Função para formatar números como moeda brasileira (R$)
     const formatCurrencyBRL = (value) => {
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL'
         }).format(value);
     };
-    
+
+    // Memoizando `fetchOrders` com useCallback
+    const fetchOrders = useCallback(async () => {
+        setIsLoading(true);
+        setErrorMessage("");
+
+        try {
+            const response = await axios.get("http://localhost:3333/proof/dashboard", {
+                params: { page: currentPage, limit: pageSize },
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            setOrders(response.data.orders || []);
+            setTotalPages(response.data.total_pages || 1);
+            setTotalOrders(response.data.orders_count || 0);
+            setAmountOrders(response.data.orders_total || 0);
+            setTotalSales(response.data.sales_count || 0);
+            setAmountSales(response.data.sales_total || 0);
+            setAverageTicket(response.data.average_ticket || 0);
+        } catch (error) {
+            setErrorMessage("Opss! Houve um erro ao carregar os pedidos. Tente novamente mais tarde.");
+            console.error("Erro na requisição:", error.response?.data || error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [token, currentPage, pageSize]); // Agora depende do `currentPage` e `pageSize`
+
+    // Chamando a API apenas quando `currentPage` ou `pageSize` mudar
+    useEffect(() => {
+        fetchOrders();
+    }, [fetchOrders]);
+
     return(
         <div className='container__main__dashboard'>
             <div className='section__menu'>
@@ -156,20 +156,22 @@ function Dashboard () {
                     </div>
                 </div>
 
+                <p className={isLoading ? "text__search__data":""}>Buscando pedidos...</p>
+                <p className={errorMessage ? "text__search__data":""}>{errorMessage}</p>
+
                 <div className='container__table'>
-                    <OrdersTable
-                        orders={orders}
-                    />
-                    <Pagination
-                        totalPages={totalPages}
-                        currentPage={currentPage}
-                        onPageChange={fetchOrders} // Atualiza a API quando muda de página
-                        onPageSizeChange={(newSize) => {
-                            setPageSize(newSize); 
-                            setCurrentPage(1); // Reseta para a página 1 ao mudar a quantidade de itens
-                        }}
-                    />
-                </div>
+                        <OrdersTable orders={orders} />
+                        <Pagination
+                            totalPages={totalPages}
+                            currentPage={currentPage}
+                            onPageChange={setCurrentPage}
+                            onPageSizeChange={(newSize) => {
+                                setPageSize(newSize);
+                                setCurrentPage(1); // Volta para página 1 ao mudar o tamanho da página
+                            }}
+                            pageSize={pageSize}
+                        />
+                    </div>
             </div>
             <div className='footer'>
                 <div  className='text__links'>

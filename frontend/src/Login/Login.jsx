@@ -14,9 +14,8 @@ function Login (){
     const [errors, setErrors] = useState({ email: "", password: "", btnClicked: "", erroRequest: "" });
     const [messageSucess, setMessageSucess] = useState("");
 
-    const navigate = useNavigate(
-
-    )
+    const navigate = useNavigate()
+    
     // Expressões Regulares
     const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 

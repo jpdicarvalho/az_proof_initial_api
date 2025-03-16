@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
+import "./Pagination.css";
 
-import './Pagination.css'
-
-const Pagination = ({ totalPages, currentPage, onPageChange, onPageSizeChange }) => {
-    const [pageSize, setPageSize] = useState(5);
+const Pagination = ({ totalPages, currentPage, onPageChange, onPageSizeChange, pageSize }) => {
   
-    // Mudar página ao clicar
-    const handlePageChange = (newPage) => {
-      if (newPage >= 1 && newPage <= totalPages) {
-        onPageChange(newPage);
-      }
-    };
+  // Mudar página ao clicar
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      onPageChange(newPage); // ✅ Agora apenas altera a página, sem chamar a API
+    }
+  };
 
   // Mudar o número de linhas por página
   const handlePageSizeChange = (e) => {
     const newSize = Number(e.target.value);
-    setPageSize(newSize);
     onPageSizeChange(newSize);
   };
 

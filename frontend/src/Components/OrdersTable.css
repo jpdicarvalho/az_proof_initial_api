@@ -1,9 +1,10 @@
 table {
-    margin-top: 40px;
+    margin-top: 10px;
     margin-right: 80px;
     border-collapse: collapse;
     color: #59666F;
     width: 100%;
+
 }
 .thead{
     border-top-left-radius: 8px;

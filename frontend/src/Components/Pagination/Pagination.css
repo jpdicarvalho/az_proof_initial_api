@@ -22,18 +22,43 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     border: none;
     cursor: pointer;
     background: transparent;
+}
+.btn__skip__all__pages:hover{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: rgba(128, 128, 128, 0.168);
+    transition: 0.5s;   
 }
 .btn__skip__one__pages{
     display: flex;
     justify-content: center;
     align-items: center;
     border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     cursor: pointer;
     background: transparent;
-
+    transition: 0.5s;
+}
+.btn__skip__one__pages:hover{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(128, 128, 128, 0.168);
+    transition: 0.5s;
 }
 .page__no__selected{
     font-weight: 400;
@@ -42,6 +67,13 @@
     color: #97A1A8;
     margin-right: 32px;
     background: transparent;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+.page__no__selected:hover{
+    background: rgba(128, 128, 128, 0.168);
     transition: 0.5s;
 }
 .active__page{
