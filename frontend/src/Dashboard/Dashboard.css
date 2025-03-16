@@ -93,7 +93,7 @@
 
 .section__content{
     width: 100%;
-    background: #f6f6f6;
+    background: #fffbfb;
 }
 .box__text__order{
     padding-left: 290px;
@@ -107,7 +107,7 @@
 .container__totais{
     display: flex;
     justify-content: space-between;
-    margin-top: 49px;
+    margin-top: 39px;
     padding-left: 290px;
     padding-right: 84px;
 }

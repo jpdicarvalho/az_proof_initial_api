@@ -1,0 +1,76 @@
+.pagination__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+    padding: 10px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 100%;
+    padding-left: 16px;
+    color: #97A1A8;
+    background: #F5F5F5;
+}
+.container__btn__skip{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 80%;
+}
+.btn__skip__all__pages{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+}
+.btn__skip__one__pages{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+
+}
+.page__no__selected{
+    font-weight: 400;
+    font-size: 14px;
+    border: none;
+    color: #97A1A8;
+    margin-right: 32px;
+    background: transparent;
+    transition: 0.5s;
+}
+.active__page{
+    background: #FE7C6E;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-weight: 400;
+    font-size: 14px;
+    margin-right: 32px; 
+    border: none;
+    transition: 0.5s;
+}
+.text__current__page{
+    margin-left: 48px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #97A1A8;
+}
+.text__label{
+    font-weight: 400;
+    font-size: 14px;
+    margin-right: 8px;
+}
+.select__rows{
+    background: #fff;
+    border: 1px solid #E6E6E6;
+    border-radius: 8px;
+    color: #97A1A8;
+    padding: 6px 16px 6px 16px;
+    outline: none;
+}

@@ -1,11 +1,66 @@
-import ImgLogin from '../assets/img_login.png'
+import { useState, useEffect } from 'react';
+import axios from 'axios'
+
 import OrdersTable from '../Components/OrdersTable';
+import Pagination from '../Components/Pagination/Pagination';
 
 import './Dashboard.css'
 
 function Dashboard () {
+  
     const userName = localStorage.getItem("userName");
+    const token = localStorage.getItem("token");
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(5);
+    const [totalPages, setTotalPages] = useState(1);
+    const [orders, setOrders] = useState([]); // Armazena os pedidos da API
+    const [totalOrders, setTotalOrders] = useState("");
+    const [amountOrders, setAmountOrders] = useState("");
+    const [totalSales, setTotalSales] = useState("");
+    const [amountSales, setAmountSales] = useState("");
+    const [averageTicket, setAverageTicket] = useState("");
+
+  
+    // Função para buscar pedidos do backend
+    const fetchOrders = async (pageNumber = 1, pageSize = 5) => {
+        try {
+            const response = await axios.get("http://localhost:3333/proof/dashboard", {
+                params: {
+                    page: pageNumber,
+                    limit: pageSize, // Envia limite por página
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            setOrders(response.data.orders || []);
+            setTotalPages(response.data.total_pages || 1);
+            setCurrentPage(pageNumber);
+            setTotalOrders(response.data.orders_count)
+            setAmountOrders(response.data.orders_total)
+            setTotalSales(response.data.sales_count)
+            setAmountSales(response.data.sales_total)
+            setAverageTicket(response.data.average_ticket)
+
+        } catch (error) {
+            console.error("Erro na requisição:", error.response?.data || error.message);
+        }
+    };
+
+    // Chamar a API ao carregar a página ou mudar a quantidade de itens
+    useEffect(() => {
+        fetchOrders(currentPage, pageSize);
+    }, [currentPage, pageSize]);
+
+    const formatCurrencyBRL = (value) => {
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(value);
+    };
+    
     return(
         <div className='container__main__dashboard'>
             <div className='section__menu'>
@@ -23,10 +78,10 @@ function Dashboard () {
                 </div>
                 <div className='box__option__dashboard'>
                     <svg className='svg__option__menu' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.75 13V8.5H6.25" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M14.25 13H1.75" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M6.25 13V5.5H9.75" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M13.25 2.5H9.75V13H13.25V2.5Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2.75 13V8.5H6.25" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M14.25 13H1.75" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M6.25 13V5.5H9.75" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M13.25 2.5H9.75V13H13.25V2.5Z" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
 
                     <p className='name__option__menu'>Dashboard</p>
@@ -38,8 +93,8 @@ function Dashboard () {
                 <div className='header__content'>
                     <div className='box__warnings center'>
                         <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.7194 5.33333C12.7194 4.27247 12.2851 3.25505 11.512 2.5049C10.7389 1.75476 9.69043 1.33333 8.59715 1.33333C7.50387 1.33333 6.45537 1.75476 5.6823 2.5049C4.90923 3.25505 4.47493 4.27247 4.47493 5.33333C4.47493 10 2.41382 11.3333 2.41382 11.3333H14.7805C14.7805 11.3333 12.7194 10 12.7194 5.33333Z" stroke="#59666F" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9.78584 14C9.66505 14.2021 9.49168 14.3698 9.28308 14.4864C9.07449 14.6029 8.83799 14.6643 8.59727 14.6643C8.35654 14.6643 8.12004 14.6029 7.91145 14.4864C7.70285 14.3698 7.52948 14.2021 7.40869 14" stroke="#59666F" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12.7194 5.33333C12.7194 4.27247 12.2851 3.25505 11.512 2.5049C10.7389 1.75476 9.69043 1.33333 8.59715 1.33333C7.50387 1.33333 6.45537 1.75476 5.6823 2.5049C4.90923 3.25505 4.47493 4.27247 4.47493 5.33333C4.47493 10 2.41382 11.3333 2.41382 11.3333H14.7805C14.7805 11.3333 12.7194 10 12.7194 5.33333Z" stroke="#59666F" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M9.78584 14C9.66505 14.2021 9.49168 14.3698 9.28308 14.4864C9.07449 14.6029 8.83799 14.6643 8.59727 14.6643C8.35654 14.6643 8.12004 14.6029 7.91145 14.4864C7.70285 14.3698 7.52948 14.2021 7.40869 14" stroke="#59666F" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                         <p className='text__warnings'>Avisos</p>
                     </div>
@@ -49,8 +104,8 @@ function Dashboard () {
                     </div>
                     <div className='box__img__profile center'>
                         <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M14.663 14V12.6667C14.663 11.9594 14.3735 11.2811 13.8581 10.781C13.3427 10.281 12.6437 10 11.9149 10H6.41856C5.6897 10 4.9907 10.281 4.47532 10.781C3.95995 11.2811 3.67041 11.9594 3.67041 12.6667V14" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9.16685 7.33333C10.6846 7.33333 11.915 6.13943 11.915 4.66667C11.915 3.19391 10.6846 2 9.16685 2C7.64909 2 6.4187 3.19391 6.4187 4.66667C6.4187 6.13943 7.64909 7.33333 9.16685 7.33333Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14.663 14V12.6667C14.663 11.9594 14.3735 11.2811 13.8581 10.781C13.3427 10.281 12.6437 10 11.9149 10H6.41856C5.6897 10 4.9907 10.281 4.47532 10.781C3.95995 11.2811 3.67041 11.9594 3.67041 12.6667V14" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M9.16685 7.33333C10.6846 7.33333 11.915 6.13943 11.915 4.66667C11.915 3.19391 10.6846 2 9.16685 2C7.64909 2 6.4187 3.19391 6.4187 4.66667C6.4187 6.13943 7.64909 7.33333 9.16685 7.33333Z" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </div>
                 </div>
@@ -63,46 +118,57 @@ function Dashboard () {
                     <div className='box__totais'>
                         <div className='box__svg center' style={{background: '#F4C8E1'}}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M18.75 16.5V5.99999C18.7512 5.70417 18.6939 5.41103 18.5813 5.13749C18.4686 4.86394 18.3029 4.61541 18.0938 4.40623C17.8846 4.19705 17.636 4.03137 17.3625 3.91873C17.089 3.8061 16.7958 3.74875 16.5 3.74999H3.75" stroke="#E54594" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M9.75 9.75H15.75" stroke="#E54594" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M9.75 12.75H15.75" stroke="#E54594" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2.07187 7.5C1.829 7.22807 1.65585 6.9012 1.56733 6.54751C1.4788 6.19382 1.47756 5.82392 1.56369 5.46964C1.64983 5.11536 1.82077 4.78732 2.0618 4.51376C2.30283 4.2402 2.60673 4.02931 2.94734 3.89924C3.28795 3.76918 3.65507 3.72383 4.01709 3.76711C4.37911 3.81039 4.72519 3.941 5.02554 4.14769C5.32589 4.35439 5.57151 4.63097 5.74126 4.95364C5.91101 5.27632 5.9998 5.63541 6 6V18C6.00019 18.3646 6.08899 18.7237 6.25874 19.0464C6.42849 19.369 6.67411 19.6456 6.97446 19.8523C7.27481 20.059 7.62089 20.1896 7.98291 20.2329C8.34493 20.2762 8.71205 20.2308 9.05266 20.1008C9.39327 19.9707 9.69717 19.7598 9.9382 19.4862C10.1792 19.2127 10.3502 18.8846 10.4363 18.5304C10.5224 18.1761 10.5212 17.8062 10.4327 17.4525C10.3441 17.0988 10.171 16.7719 9.92813 16.5H20.4281C20.7177 16.8238 20.9074 17.2245 20.9743 17.6538C21.0411 18.0831 20.9823 18.5225 20.8048 18.9191C20.6274 19.3156 20.3389 19.6523 19.9743 19.8885C19.6096 20.1246 19.1844 20.2502 18.75 20.25H8.25" stroke="#E54594" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M18.75 16.5V5.99999C18.7512 5.70417 18.6939 5.41103 18.5813 5.13749C18.4686 4.86394 18.3029 4.61541 18.0938 4.40623C17.8846 4.19705 17.636 4.03137 17.3625 3.91873C17.089 3.8061 16.7958 3.74875 16.5 3.74999H3.75" stroke="#E54594" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M9.75 9.75H15.75" stroke="#E54594" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M9.75 12.75H15.75" stroke="#E54594" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M2.07187 7.5C1.829 7.22807 1.65585 6.9012 1.56733 6.54751C1.4788 6.19382 1.47756 5.82392 1.56369 5.46964C1.64983 5.11536 1.82077 4.78732 2.0618 4.51376C2.30283 4.2402 2.60673 4.02931 2.94734 3.89924C3.28795 3.76918 3.65507 3.72383 4.01709 3.76711C4.37911 3.81039 4.72519 3.941 5.02554 4.14769C5.32589 4.35439 5.57151 4.63097 5.74126 4.95364C5.91101 5.27632 5.9998 5.63541 6 6V18C6.00019 18.3646 6.08899 18.7237 6.25874 19.0464C6.42849 19.369 6.67411 19.6456 6.97446 19.8523C7.27481 20.059 7.62089 20.1896 7.98291 20.2329C8.34493 20.2762 8.71205 20.2308 9.05266 20.1008C9.39327 19.9707 9.69717 19.7598 9.9382 19.4862C10.1792 19.2127 10.3502 18.8846 10.4363 18.5304C10.5224 18.1761 10.5212 17.8062 10.4327 17.4525C10.3441 17.0988 10.171 16.7719 9.92813 16.5H20.4281C20.7177 16.8238 20.9074 17.2245 20.9743 17.6538C21.0411 18.0831 20.9823 18.5225 20.8048 18.9191C20.6274 19.3156 20.3389 19.6523 19.9743 19.8885C19.6096 20.1246 19.1844 20.2502 18.75 20.25H8.25" stroke="#E54594" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                         </div>
-                        <p className='text__totais'>200 Pedidos</p>
-                        <p className='values__totais'>R$ 50.480,95</p>
+                        <p className='text__totais'>{totalOrders} Pedidos</p>
+                        <p className='values__totais'>{formatCurrencyBRL(amountOrders)}</p>
                     </div>
                     <div className='box__totais'>
                         <div className='box__svg center' style={{background: '#B6EEDD'}}>
                             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.3 6.75V8.25" stroke="#07C693" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12.3 15.75V17.25" stroke="#07C693" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12.3 21C17.2706 21 21.3 16.9706 21.3 12C21.3 7.02944 17.2706 3 12.3 3C7.32949 3 3.30005 7.02944 3.30005 12C3.30005 16.9706 7.32949 21 12.3 21Z" stroke="#07C693" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M10.05 15.75H13.425C13.9223 15.75 14.3992 15.5525 14.7509 15.2008C15.1025 14.8492 15.3 14.3723 15.3 13.875C15.3 13.3777 15.1025 12.9008 14.7509 12.5492C14.3992 12.1975 13.9223 12 13.425 12H11.175C10.6778 12 10.2009 11.8025 9.84922 11.4508C9.49759 11.0992 9.30005 10.6223 9.30005 10.125C9.30005 9.62772 9.49759 9.15081 9.84922 8.79917C10.2009 8.44754 10.6778 8.25 11.175 8.25H14.55" stroke="#07C693" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12.3 6.75V8.25" stroke="#07C693" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M12.3 15.75V17.25" stroke="#07C693" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M12.3 21C17.2706 21 21.3 16.9706 21.3 12C21.3 7.02944 17.2706 3 12.3 3C7.32949 3 3.30005 7.02944 3.30005 12C3.30005 16.9706 7.32949 21 12.3 21Z" stroke="#07C693" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M10.05 15.75H13.425C13.9223 15.75 14.3992 15.5525 14.7509 15.2008C15.1025 14.8492 15.3 14.3723 15.3 13.875C15.3 13.3777 15.1025 12.9008 14.7509 12.5492C14.3992 12.1975 13.9223 12 13.425 12H11.175C10.6778 12 10.2009 11.8025 9.84922 11.4508C9.49759 11.0992 9.30005 10.6223 9.30005 10.125C9.30005 9.62772 9.49759 9.15081 9.84922 8.79917C10.2009 8.44754 10.6778 8.25 11.175 8.25H14.55" stroke="#07C693" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                         </div>
-                        <p className='text__totais'>156 Vendas</p>
-                        <p className='values__totais'>R$ 35.996,42</p>
+                        <p className='text__totais'>{totalSales} Vendas</p>
+                        <p className='values__totais'>{formatCurrencyBRL(amountSales)}</p>
                     </div>
                     <div className='box__totais'>
                         <div className='box__svg center' style={{background: '#C3E7F3'}}>
                             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4.3501 17.25H10.3501" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7.3501 14.25V20.25" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M10.3501 6.75H4.3501" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M20.8501 15.7594H14.8501" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M20.8501 18.7406H14.8501" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M20.1001 4.5L15.6001 9" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M20.1001 9L15.6001 4.5" stroke="#3CB0D9" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4.3501 17.25H10.3501" stroke="#3CB0D9" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M7.3501 14.25V20.25" stroke="#3CB0D9" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M10.3501 6.75H4.3501" stroke="#3CB0D9" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M20.8501 15.7594H14.8501" stroke="#3CB0D9" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M20.8501 18.7406H14.8501" stroke="#3CB0D9" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M20.1001 4.5L15.6001 9" stroke="#3CB0D9" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M20.1001 9L15.6001 4.5" stroke="#3CB0D9" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                         </div>
                         <p className='text__totais'>Ticket médio</p>
-                        <p className='values__totais'>R$ 230,74</p>
+                        <p className='values__totais'>{formatCurrencyBRL(averageTicket)}</p>
                     </div>
                 </div>
 
                 <div className='container__table'>
-                    <OrdersTable/>
+                    <OrdersTable
+                        orders={orders}
+                    />
+                    <Pagination
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        onPageChange={fetchOrders} // Atualiza a API quando muda de página
+                        onPageSizeChange={(newSize) => {
+                            setPageSize(newSize); 
+                            setCurrentPage(1); // Reseta para a página 1 ao mudar a quantidade de itens
+                        }}
+                    />
                 </div>
             </div>
         </div>

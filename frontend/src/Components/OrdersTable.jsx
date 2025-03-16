@@ -1,7 +1,16 @@
 import React from "react";
 import './OrdersTable.css';
 
-const OrdersTable = () => {
+// Função para formatar número como moeda brasileira (BRL)
+const formatCurrencyBRL = (value) => {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(value);
+};
+
+const OrdersTable = ({ orders }) => {
+
   return (
       <table>
         <thead>
@@ -35,63 +44,29 @@ const OrdersTable = () => {
           </tr>
         </thead>
         <tbody>
+        {orders.length > 0 ? (
+          orders.map((order) => (
+            <tr key={order.id_pedido}>
+              <td>#{order.id_pedido}</td>
+              <td>#{order.id_loja}</td>
+              <td>{new Date(order.data_criacao).toLocaleDateString("pt-BR")}</td>
+              <td>{order.nome_cliente}</td>
+              <td>{order.cpf_cliente}</td>
+              <td>{order.status_pedido}</td>
+              <td>{order.status_pagamento}</td>
+              <td>{order.metodo_pagamento}</td>
+              <td>{formatCurrencyBRL(order.total)}</td>
+            </tr>
+          ))
+        ) : (
           <tr>
-            <td>#123456</td>
-            <td>#123456</td>
-            <td>01/02/2022</td>
-            <td>Tiago Hintz</td>
-            <td>007.284.213-56</td>
-            <td>Pagamento aprovado</td>
-            <td>Aprovado</td>
-            <td>Crédito a prazo</td>
-            <td>R$ 1.127,16</td>
+            <td colSpan="9" style={{ textAlign: "center", padding: "10px" }}>
+              Nenhum pedido encontrado.
+            </td>
           </tr>
-          <tr>
-            <td>#234567</td>
-            <td>#234567</td>
-            <td>01/02/2022</td>
-            <td>Tiago Hintz</td>
-            <td>007.284.213-56</td>
-            <td>Enviado</td>
-            <td>Aprovado</td>
-            <td>Crédito à vista</td>
-            <td>R$ 415,98</td>
-          </tr>
-          <tr>
-            <td>#345678</td>
-            <td>#345678</td>
-            <td>31/01/2022</td>
-            <td>Patrícia Mesquita</td>
-            <td>004.283.146-34</td>
-            <td>Enviado</td>
-            <td>Aprovado</td>
-            <td>Pix</td>
-            <td>R$ 809,99</td>
-          </tr>
-          <tr>
-            <td>#456789</td>
-            <td>#456789</td>
-            <td>31/01/2022</td>
-            <td>Patrícia Mesquita</td>
-            <td>004.283.146-34</td>
-            <td>Criado</td>
-            <td>Pendente</td>
-            <td>Pix</td>
-            <td>R$ 809,99</td>
-          </tr>
-          <tr>
-            <td>#567891</td>
-            <td>#567891</td>
-            <td>30/01/2022</td>
-            <td>Mateus Taufer</td>
-            <td>856.356.892-47</td>
-            <td>Pagamento aprovado</td>
-            <td>Aprovado</td>
-            <td>Boleto</td>
-            <td>R$ 607,95</td>
-          </tr>
-        </tbody>
-      </table>
+        )}
+      </tbody>
+    </table>
   );
 };
 

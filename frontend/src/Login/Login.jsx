@@ -47,7 +47,7 @@ function Login (){
         }));
     };
 
-    // Envio do login
+    // Função para fazer login
     const handleLogin = async () => {
         setIsLoading(true)
         setErrors("");
