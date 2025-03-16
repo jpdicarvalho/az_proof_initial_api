@@ -44,10 +44,11 @@ Isso irá basicamente:
   1. Iniciar o backend (API RESTfull)
   2. Iniciar o frontend (React + Vite com JavaScript)
 
-Depois, para acessar a aplicação, use:
+Depois, para acessar a aplicação completa, basta fazer login com o usuário de teste já existente em:
   ````sh
    http://localhost:5173
   ````
+
 ## Comandos úteis parar gerenciar os containers:
 Parar os containers:
   ````sh
