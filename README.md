@@ -44,7 +44,10 @@ Isso irá basicamente:
   1. Iniciar o backend (API RESTfull)
   2. Iniciar o frontend (React + Vite com JavaScript)
 
-Depois, para acessar a aplicação completa, basta fazer login com o usuário de teste já existente em:
+Depois, para usar a aplicação completa, basta fazer login no link abaixo usando as credenciais do usuário de teste:
+  - Credenciais:
+     - usuário: teste@azape.co
+     - senha: 123456 
   ````sh
    http://localhost:5173
   ````
