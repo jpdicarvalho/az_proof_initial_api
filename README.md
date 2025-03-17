@@ -25,8 +25,9 @@
 
      Para tornar a aplicação **portável e fácil de rodar em qualquer ambiente**, utilizei o **Docker** para containerizar os serviços. Isso permite que a aplicação seja executada sem necessidade de instalações manuais ou configurações específicas de cada máquina.
 
-- **Orquestração com Docker Compose:**  
-  Para evitar que cada serviço precise ser iniciado individualmente, implementei um **Docker Compose** que gerencia **backend e frontend** de forma automática. Assim, ao rodar um único comando, todos os containers sobem juntos e já conectados corretamente.
+- **Orquestração com Docker Compose:**
+  
+     Para evitar que cada serviço precise ser iniciado individualmente, implementei um **Docker Compose** que gerencia **backend e frontend** de forma automática. Assim, ao rodar um único comando, todos os containers sobem juntos e já conectados corretamente.
   
 
 ## Como Rodar o Projeto Localmente?
